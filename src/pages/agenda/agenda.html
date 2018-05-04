@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar color="rotaract">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Agenda</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let item of lista" (click)="abrirDetalhe(item)">
+      {{item.nome}} - {{item.realizador}} - {{item.dataEvento | date : 'dd/MM/yyyy'}}
+    </button>
+  </ion-list>
+</ion-content>

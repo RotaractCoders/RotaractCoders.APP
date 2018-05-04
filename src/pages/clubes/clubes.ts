@@ -1,25 +1,53 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the ClubesPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { ClubeResult } from '../../models/results/clube-result';
+
+import { DetalheClubePage } from '../detalhe-clube/detalhe-clube';
+
+import { ClubeProvider } from '../../providers/clube/clube';
 
 @IonicPage()
 @Component({
-  selector: 'page-clubes',
-  templateUrl: 'clubes.html',
+    selector: 'page-clubes',
+    templateUrl: 'clubes.html',
+    providers: [
+        ClubeProvider
+    ]
 })
 export class ClubesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    lista: ClubeResult[] = [];
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ClubesPage');
-  }
+    loader = this.loadingController.create({
+        content: 'Carrgegando lista de clubes...',
+    });
+
+    constructor(
+        private clubeProvider: ClubeProvider,
+        private loadingController: LoadingController,
+        public navCtrl: NavController,
+        public navParams: NavParams) {
+
+            this.loader.present().then(() => {
+                this.clubeProvider.listar().subscribe(data => {
+                    this.lista = data;
+
+                    this.lista = this.lista.filter(x => x.dataFechamento == null);
+
+                    this.loader.dismiss();
+                }, err => this.loader.dismiss());
+            });
+    }
+
+    abrirClube(codigoClube: string) {
+
+        //console.log(codigoClube);
+        this.navCtrl.push(DetalheClubePage, { codigoClube: codigoClube });
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad ClubesPage');
+    }
 
 }

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar color="rotaract">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Downloads</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let item of listaCategorias" (click)="abrirLinks(item)">
+      {{item}}
+    </button>
+  </ion-list>
+</ion-content>

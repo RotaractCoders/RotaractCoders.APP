@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Storage } from '@ionic/storage';
+import { Config } from '../../config';
 
-/*
-  Generated class for the ClubeProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class ClubeProvider {
 
-  constructor(public http: Http) {
-    console.log('Hello ClubeProvider Provider');
+  config: Config = new Config();
+
+  constructor(
+    private storage: Storage,
+    public http: Http) { }
+
+  listar() {
+    return this.http.get(this.config.apiUrl + 'api/Clube/' + this.config.distrito)
+      .map(res => res.json());
   }
 
+  obter(codigoClube: string) {
+    return this.http.get(this.config.apiUrl + 'api/Clube/Obter/' + codigoClube)
+      .map(res => res.json());
+  }
 }
