@@ -44,7 +44,7 @@ Você pode contribuir de diversas formas:
 
 ### Dando ideias de novas funcionalidades
 
-Me manda uma mensagem no whatsapp falando sua ideia (11)94955-4268 - Eduardo
+Mande uma mensagem para o administrador do projeto.
 
 ### Programando
 
