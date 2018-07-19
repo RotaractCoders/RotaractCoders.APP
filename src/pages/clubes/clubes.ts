@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, LoadingController, NavParams } from 'ionic-angular';
-
 import { ClubeResult } from '../../models/results/clube-result';
-
-import { DetalheClubePage } from '../detalhe-clube/detalhe-clube';
-
 import { ClubeProvider } from '../../providers/clube/clube';
+import { DetalheClubeIntermediarioPage } from '../detalhe-clube-intermediario/detalhe-clube-intermediario';
 
-@IonicPage()
 @Component({
     selector: 'page-clubes',
     templateUrl: 'clubes.html',
@@ -20,7 +16,7 @@ export class ClubesPage {
     lista: ClubeResult[] = [];
 
     loader = this.loadingController.create({
-        content: 'Carrgegando lista de clubes...',
+        content: 'Carregando...',
     });
 
     constructor(
@@ -29,25 +25,21 @@ export class ClubesPage {
         public navCtrl: NavController,
         public navParams: NavParams) {
 
-            this.loader.present().then(() => {
-                this.clubeProvider.listar().subscribe(data => {
-                    this.lista = data;
+        this.loader.present().then(() => {
+            this.clubeProvider.listar().subscribe(data => {
+                this.lista = data;
 
-                    this.lista = this.lista.filter(x => x.dataFechamento == null);
+                this.lista = this.lista.filter(x => x.dataFechamento == null);
 
-                    this.loader.dismiss();
-                }, err => this.loader.dismiss());
-            });
+                this.loader.dismiss();
+            }, err => this.loader.dismiss());
+        });
     }
 
     abrirClube(codigoClube: string) {
 
-        //console.log(codigoClube);
-        this.navCtrl.push(DetalheClubePage, { codigoClube: codigoClube });
+        this.navCtrl.push(DetalheClubeIntermediarioPage, {
+            codigoClube: codigoClube
+        });
     }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad ClubesPage');
-    }
-
 }
